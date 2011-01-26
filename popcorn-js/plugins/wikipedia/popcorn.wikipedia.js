@@ -9,7 +9,7 @@ var wikiCallback;
    * Wikipedia popcorn plug-in 
    * Displays a wikipedia aricle in the target specified by the user by using
    * new DOM element instead overwriting them
-   * Options parameter will need a start, end, target, lang, src, title and numOfWords.
+   * Options parameter will need a start, end, target, lang, src, title and numberofwords.
    * -Start is the time that you want this plug-in to execute
    * -End is the time that you want this plug-in to stop executing 
    * -Target is the id of the document element that the text from the article needs to be  
@@ -17,7 +17,7 @@ var wikiCallback;
    * -Lang (optional, defaults to english) is the language in which the article is in.
    * -Src is the url of the article 
    * -Title (optional) is the title of the article
-   * -NumOfWords (optional, defaults to 200) is  the number of words you want displaid.  
+   * -numberofwords (optional, defaults to 200) is  the number of words you want displaid.  
    *
    * @param {Object} options
    * 
@@ -41,13 +41,13 @@ var wikiCallback;
         website: "annasob.wordpress.com"
       },
       options:{
-        start      : {elem:'input', type:'text', label:'In'},
-        end        : {elem:'input', type:'text', label:'Out'},
-        lang       : {elem:'input', type:'text', label:'Language'},
-        src        : {elem:'input', type:'text', label:'Url'},
-        title      : {elem:'input', type:'text', label:'Title'},
-        numOfWords : {elem:'input', type:'text', label:'Num Of Words'},
-        target     : 'wiki-container'
+        start         : {elem:'input', type:'text', label:'In'},
+        end           : {elem:'input', type:'text', label:'Out'},
+        lang          : {elem:'input', type:'text', label:'Language'},
+        src           : {elem:'input', type:'text', label:'Src'},
+        title         : {elem:'input', type:'text', label:'Title'},
+        numberofwords : {elem:'input', type:'text', label:'Num Of Words'},
+        target        : 'wiki-container'
       }
     },
     /**
@@ -64,19 +64,14 @@ var wikiCallback;
       var  _text, _guid = Popcorn.guid(); 
       
       // if the user didn't specify a language default to english
-      
-      options.lang  = options.lang || "en";
-      
+      if (typeof options.lang === 'undefined') { options.lang ="en"; }
       // if the user didn't specify number of words to use default to 200 
-      options.numOfWords  = options.numOfWords || 200;
-
-
-      
+      options.numberofwords  = options.numberofwords || 200;
+            
       // wiki global callback function with a unique id
       // function gets the needed information from wikipedia
       // and stores it by appending values to the options object
-      window["wikiCallback"+ _guid ]  = function (data) { 
-        
+      window["wikiCallback"+ _guid]  = function (data) { 
         options._link = document.createElement('a');
         options._link.setAttribute('href', options.src);
         options._link.setAttribute('target', '_blank');
@@ -87,31 +82,16 @@ var wikiCallback;
         // get the article text and remove any special characters
         _text = data.parse.text["*"].substr(data.parse.text["*"].indexOf('<p>'));
         _text = _text.replace(/((<(.|\n)+?>)|(\((.*?)\) )|(\[(.*?)\]))/g, "");
-        options._desc.innerHTML = _text.substr(0,  options.numOfWords ) + " ...";
+        options._desc.innerHTML = _text.substr(0,  options.numberofwords ) + " ...";
         
         options._fired = true;
       };
       
       var head   = document.getElementsByTagName("head")[0];
-      var script = document.createElement("script"), 
-          request = ( options.title || options.src.slice(options.src.lastIndexOf("/")+1));
-      
-      if ( !request ) {
-        return;
-      }
-      
-      script.src = "http://"+options.lang+".wikipedia.org/w/api.php?action=parse&props=text&page=" + request + "&format=json&callback=wikiCallback"+ _guid;
-      
-      //console.log(script.src);
+      var script = document.createElement("script");
+      script.src = "http://"+options.lang+".wikipedia.org/w/api.php?action=parse&props=text&page=" + ( options.title || options.src.slice(options.src.lastIndexOf("/")+1)) + "&format=json&callback=wikiCallback"+ _guid;
 
       head.insertBefore( script, head.firstChild );        
-
-      options._container              = document.createElement('div');
-
-      if (document.getElementById(options.target)) {
-        document.getElementById(options.target).appendChild(options._container);
-      }   
-      
     },
     /**
      * @member wikipedia 
@@ -130,12 +110,11 @@ var wikiCallback;
         } else {
       
           if (options._link && options._desc) {
-          
-       
-         
-            options._container.appendChild(options._link);
-            options._container.appendChild(options._desc);
-            options._added = true;
+            if ( document.getElementById( options.target ) ) {
+              document.getElementById( options.target ).appendChild(options._link);
+              document.getElementById( options.target ).appendChild(options._desc);
+              options._added = true;
+            }
           }
         }
       };
@@ -152,8 +131,8 @@ var wikiCallback;
       // ensure that the data was actually added to the 
       // DOM before removal
       if (options._added) {
-        options._container.removeChild(options._link);
-        options._container.removeChild(options._desc);
+        document.getElementById( options.target ).removeChild(options._link);
+        document.getElementById( options.target ).removeChild(options._desc);
       }
     }
      

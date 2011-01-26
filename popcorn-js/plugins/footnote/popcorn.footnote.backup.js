@@ -24,13 +24,6 @@
         } )
    *
    */
-  
-  var stub = {
-        data: {
-          events: {}
-        }
-      };   
-   
   Popcorn.plugin( "footnote" , {
     
     manifest: {
@@ -61,14 +54,7 @@
      * of the video  reaches the start time provided by the 
      * options variable
      */
-    start: function(event, options) {
-      
-      //Popcorn.events.fn.trigger.call( stub, "annotate", { id: options.id } );
-      
-      this.trigger( "annotate", {
-        id: options.id
-      });
-    
+    start: function(event, options){
       options._container.style.display = "inline";
     },
     /**

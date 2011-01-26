@@ -6,8 +6,8 @@ body {
 
 video {
   /*border:1px solid black;*/
-  width:350px;
-  height: 300px;
+  width: 710px;/*512px;*/
+  height: 290px;
   background: #000;
   /*margin:10px auto;*/
   /*margin:10px 10px;*/
@@ -54,18 +54,21 @@ header{
   padding:0;
   height:50px;
   /*overflow:hidden;*/
+  /*
   background: -webkit-gradient(
       linear,
       left bottom,
       left top,
-      color-stop(0.76, rgb(255,255,255)),
-      color-stop(0, rgb(204,204,204))
+      color-stop(0, rgb(255,255,255)),
+      color-stop(0.5, rgb(204,204,204))
+
   );
   background: -moz-linear-gradient(
       center bottom,
       rgb(204,204,204) 0%,
       rgb(255,255,255) 76%
   );
+  */
 }
 footer.container {
   margin-top: 30px;
@@ -144,6 +147,7 @@ canvas{
 .select-li{padding:.1em;list-style-type:none}
 .select-li h3 { margin-bottom: 0; }
 
+#analysis ul{list-style-type:none}
 
 .icon{vertical-align: middle;}
 
@@ -163,9 +167,16 @@ canvas{
 }
 
 .ui-accordion-panel div {
-  height: 220px;
+  margin-top:-2px;    
+  height: 250px;
   overflow-y:scroll;
 }
+
+#ui-lower {
+  height: 290px;
+
+}
+
 
 #ui-tools-accordion div {
   height: 180px;

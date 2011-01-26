@@ -37,7 +37,7 @@
           website: "annasob.wordpress.com"
         },
         options:{
-          //id     : {elem:'input', type:'text', label:'Id'},
+          id     : {elem:'input', type:'text', label:'Id'},
           start  : {elem:'input', type:'text', label:'In'},
           end    : {elem:'input', type:'text', label:'Out'},
           src    : {elem:'input', type:'text', label:'Src'},
@@ -45,27 +45,17 @@
         }
       },
       _setup : function( options ) {
-        
         // make an iframe 
-        options._container  = document.createElement( 'div' );
-        
-        options._iframe  = document.createElement( 'iframe' );
-        options._iframe.setAttribute('width', "100%"); //100%
-        options._iframe.setAttribute('height', "100%"); //100%
-        
-
-        options._container.style.display = 'none';
-        
-        
-
-        
-        if (document.getElementById(options.target)) {
-          
-          options._container.appendChild(options._iframe);
-          
-          document.getElementById(options.target).appendChild(options._container);
-
-        }           
+        options._iframe  = document.createElement( 'iframe' ),
+        options._iframe.setAttribute('width', "100%");
+        options._iframe.setAttribute('height', "100%");
+        options._iframe.id  = options.id;
+        options._iframe.src = options.src;
+        options._iframe.style.display = 'none';
+        // add the hidden iframe to the DOM
+        if ( document.getElementById( options.target ) ) {
+          document.getElementById( options.target ).appendChild(options._iframe);
+        }
         
       },
       /**
@@ -76,10 +66,7 @@
        */
       start: function(event, options){
         // make the iframe visible
-        
-        //console.log(options._iframe);
-        options._iframe.src = options.src;
-        options._container.style.display = 'inline';
+        options._iframe.style.display = 'inline';
       },
       /**
        * @member webpage 
@@ -89,7 +76,7 @@
        */
       end: function(event, options){
         // make the iframe invisible
-        options._container.style.display = 'none';
+        options._iframe.style.display = 'none';
       }
       
     };
