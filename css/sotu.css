@@ -7,7 +7,7 @@ body {
 video {
   /*border:1px solid black;*/
   width: 710px;/*512px;*/
-  height: 290px;
+  height: 330px;
   background: #000;
   /*margin:10px auto;*/
   /*margin:10px 10px;*/
@@ -212,8 +212,8 @@ canvas{
 }
 
 
-#ui-video-editor{
-height: 330px;
+#ui-video{
+height: 430px;
 }
 
 

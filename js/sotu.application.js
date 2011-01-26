@@ -36,6 +36,7 @@
   
     var $doc = $(doc), 
         $pop = Popcorn("#video"),
+        $vid = $("#video"), 
         urls = {
           speech: "http://www.pbs.org/newshour/interactive/speeches/api/4?callback=cb", 
           footnotes: "http://www.pbs.org/newshour/interactive/speeches/api/4/footnotes?callback=cb"
@@ -73,8 +74,6 @@
             author;
 
         $analysis.html("<ul></ul>");
-        
-        console.log(notes);
         
         _.each( notes, function( data, idx ) {
 
@@ -131,10 +130,14 @@
           
           //  Store in footnote cache arrays by index
           footnotes[ index ].push( obj );
+          
         }
       
       });
 
+      //  Enable the video controls 
+      $vid.attr( "controls", "controls" );
+      
       //  Store footnote cache in a document data property
       $doc.data( "footnotes", footnotes );  
       
